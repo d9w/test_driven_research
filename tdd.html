@@ -1,0 +1,254 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Test Driven Research</title>
+
+		<link rel="stylesheet" href="reveal/css/reset.css">
+		<link rel="stylesheet" href="reveal/css/reveal.css">
+		<link rel="stylesheet" href="reveal/css/theme/solarized.css">
+		<!-- <link rel="stylesheet" href="reveal/css/theme/evo.css"> -->
+		<link rel="stylesheet" href="reveal/css/custom.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="reveal/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+		 link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal/css/print/pdf.css' : '../reveal/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section>
+					<h1>Test Driven Research</h1>
+          <br />
+          <br />
+          Test Driven Development for Research Projects and Academic Code
+          <br />
+          Dennis Wilson
+				</section>
+
+        <section>
+            <h2>Outline</h2>
+            <ul>
+                <li>What is TDD?</li>
+                <li>Why do TDD for research?</li>
+                <li>How to structure a research project with TDD</li>
+                <li>Resources for TDD</li>
+                <li>Example in Julia</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Manual testing</h2>
+            <ul>
+                <li>Running code yourself to see if it does what you expect</li>
+                <li>Cell-based code execution (Jupyter) encourages this</li>
+                <li>Very time consuming to run</li>
+                <li>Definition not rigorous</li>
+                <li>Rarely run the same tests over time</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Unit tests</h2>
+            an automatic test that exclusively tests internal code
+            <br>
+            <br>
+            <ul>
+                <li>objective: definitive PASS or FAIL response</li>
+                <li>once defined, tests are easy to run</li>
+                <li>continuous integration tools allow for automatic testing of full suite</li>
+                <li>coverage tools show what code is validated</li>
+                <li>allows easier code refactoring, cleaner code</li>
+            </ul>
+            <p class="fragment">
+            Problems
+            </p>
+            <ul class="fragment">
+                <li>Time-consuming to write</li>
+                <li>Makes changing code harder</li>
+                <li>Difficult to write tests</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Test Driven Development</h2>
+            <b>Write the unit tests first</b>
+            <br>
+            Incremental approach that allows for validation of code as you progress
+            <br>
+            <img src="imgs/tdd.png">
+        </section>
+
+        <section>
+            <h2>TDD advantages</h2>
+            <ul>
+                <li>Early understanding of specification, needs of the program</li>
+                <li>Encourages high coverage rates</li>
+                <li>Code is written for being tested, encourages modularity</li>
+                <li>Refactoring is easy, encourages clearer code</li>
+                <li>Automatic "documentation"</li>
+                <li>Dopamine hits on seeing green text</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>TDD for research</h2>
+            <ul>
+                <li>Identify algorithm components (functions)</li>
+                <li>Write tests for individual functions</li>
+                <li>Verify component by component instead of full algorithm</li>
+                <li>Consider edge cases - inputs that might break a function</li>
+                <li>Verify only the constant parts, not all the details</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Unit tests vs experiments</h2>
+            <table>
+                <tr>
+                    <th>Unit tests</th>
+                    <th>Experiments</th>
+                </tr>
+                <tr>
+                    <td><ul>
+                        <li>Verify specific functioning</li>
+                        <li>Test extreme or exhaustive cases</li>
+                        <li>More expensive book-keeping</li>
+                    </ul></td>
+                    <td><ul>
+                        <li>Use aggregate functionality</li>
+                        <li>Tests specific cases</li>
+                        <li>Efficiency is a priority</li>
+                    </ul></td>
+                </tr>
+            </table>
+            <br/>
+            Unit tests help build the algorithm code. Experiments use the code.
+            <br/>
+            <p class="fragment">
+            TDD can make writing experiments easier by reusing similar code.
+            </p>
+        </section>
+
+        <section>
+            <h2>Structuring research projects with TDD</h2>
+            <ul>
+                <li>Understand algorithm, identify components</li>
+                <li>Start small, write tests for independent components</li>
+                <li>Build on components to advance toward working algorithm</li>
+                <li>TDD cycle with increasing complexity, approach full algorithm</li>
+                <li>Use automated test of full algorithm as a base for experiment scripts or notebooks</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Julia</h2>
+            <ul>
+                <li>Testing with <a href="https://docs.julialang.org/en/v1/stdlib/Test/">Test</a>, included in base language</li>
+                <li>Best used in package development in <code>test/runtests</code></li>
+                <li><code>@test</code> macro possible anywhere</li>
+                <li>Example using the <a href="https://junolab.org/">Juno IDE</a>
+            </ul>
+            <br />
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/QVmU29rCjaA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </section>
+
+        <section>
+            <h2>Python</h2>
+            Recommended tools: <a href="https://docs.python.org/3/library/unittest.html">unittest</a>, <a href="https://docs.pytest.org/en/latest/">pytest</a>
+            <br/>
+            <pre><code data-trim data-noescape>
+            # content of test_sample.py
+            def inc(x):
+                return x + 1
+
+            def test_answer():
+                assert inc(3) == 5
+            </code></pre>
+            <pre><code data-trim data-noescape>
+            $ pytest
+            =========================== test session starts ============================
+            platform linux -- Python 3.x.y, pytest-5.x.y, py-1.x.y, pluggy-0.x.y
+            cachedir: $PYTHON_PREFIX/.pytest_cache
+            rootdir: $REGENDOC_TMPDIR
+            collected 1 item
+
+            test_sample.py F                                                     [100%]
+
+            ================================= FAILURES =================================
+            _______________________________ test_answer ________________________________
+
+                def test_answer():
+            >       assert inc(3) == 5
+            E       assert 4 == 5
+            E        +  where 4 = inc(3)
+
+            test_sample.py:6: AssertionError
+            ========================= short test summary info ==========================
+            FAILED test_sample.py::test_answer - assert 4 == 5
+            ============================ 1 failed in 0.12s =============================
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>TDD Resources</h2>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=z7_EIDWbOhg">French video about TDD</a></li>
+                <li><a href="https://www.artofunittesting.com/">The Art of Unit Testing</a></li>
+                <li><a href="https://docs.python-guide.org/writing/tests/">Hitchhiker's Guide to Python chapter on testing</a></li>
+                <li><a href="https://rbcs-us.com/documents/Why-Most-Unit-Testing-is-Waste.pdf">Why Most Unit Testing is a Waste</a></li>
+                <li><a href="https://travis-ci.org/">Coverage tools and CI with Travis</a></li>
+            </ul>
+            <br>
+            <p class="fragment">
+            Few resources about TDD for academic code
+            </p>
+        </section>
+
+      </div>
+      <div id="footer-container" style="display:none;">
+          <div id="footer">
+              Test Driven Research, Dennis G. Wilson
+              <br />
+              <a href="https://github.com/d9w/test_driven_research/">https://github.com/d9w/test_driven_research/</a>
+              <br />
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
+          </div>
+      </div>
+		</div>
+
+		<script src="reveal/js/reveal.js"></script>
+		<script src="reveal/js/jquery-3.5.0.min.js"></script>
+
+		<script>
+     Reveal.initialize({
+         width: "90%",
+         height: "90%",
+         slideNumber: 'c',
+         transition: 'none',
+         progress: true,
+         hash: true,
+         center: false,
+         dependencies: [
+             { src: '../reveal/plugin/markdown/marked.js' },
+             { src: '../reveal/plugin/markdown/markdown.js' },
+					   { src: '../reveal/plugin/highlight/highlight.js' },
+             { src: '../reveal/plugin/notes/notes.js', async: true }
+         ]
+     });
+     var footer = $('#footer-container').html();
+     $('div.reveal').append(footer);
+		</script>
+	</body>
+</html>
